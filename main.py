@@ -166,7 +166,6 @@ def process_events_to_calendar(cal, events):
             
             # --- ⏪ 改回原样：只显示标题，去掉 [HH:MM] ---
             e.name = e_data['title'] 
-            
             e.begin = start_dt
             e.end = end_dt
             e.description = e_data['desc']
@@ -198,3 +197,4 @@ if __name__ == "__main__":
         import traceback
         traceback.print_exc()
         sys.exit(1)
+
