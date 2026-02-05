@@ -2,31 +2,17 @@ BEGIN:VCALENDAR
 VERSION:2.0
 PRODID:Air Warning
 BEGIN:VEVENT
-DESCRIPTION:轻度污染，刚需出门建议防护。(75 < PM2.5 < 115)\n(PM2.5:82 | PM10:88 | NO2:73 | O3:3)
+DESCRIPTION:轻度污染，刚需出门建议防护。(75 < PM2.5 < 115)\n(PM2.5:81 | PM10:87 | NO2:72 | O3:4)
 DTEND:20260208T010000Z
 DTSTART:20260207T230000Z
 SUMMARY:😷 刚需窗口
-UID:f87ef02d-0e13-469f-a7c5-1f1f09d204df@f87e.org
+UID:b3b6af6a-b394-48c1-a8bc-6e774737d592@b3b6.org
 END:VEVENT
 BEGIN:VEVENT
-DESCRIPTION:轻度污染，刚需出门建议防护。(75 < PM2.5 < 115)\n(PM2.5:81 | PM10:84 | NO2:83 | O3:2)
+DESCRIPTION:轻度污染，刚需出门建议防护。(75 < PM2.5 < 115)\n(PM2.5:76 | PM10:79 | NO2:81 | O3:1)
 DTEND:20260208T160000Z
 DTSTART:20260208T120000Z
 SUMMARY:😷 刚需窗口
-UID:ce5e8536-cf3f-488c-8bc8-65174eaf4ef6@ce5e.org
-END:VEVENT
-BEGIN:VEVENT
-DESCRIPTION:轻度污染，刚需出门建议防护。(75 < PM2.5 < 115)\n(PM2.5:106 | PM10:108 | NO2:92 | O3:28)
-DTEND:20260205T090000Z
-DTSTART:20260205T060000Z
-SUMMARY:😷 刚需窗口
-UID:8ecc014c-34ce-49b9-8d4d-8907987c3f5c@8ecc.org
-END:VEVENT
-BEGIN:VEVENT
-DESCRIPTION:轻度污染，刚需出门建议防护。(75 < PM2.5 < 115)\n(PM2.5:107 | PM10:109 | NO2:93 | O3:11)
-DTEND:20260205T160000Z
-DTSTART:20260205T140000Z
-SUMMARY:😷 刚需窗口
-UID:1a0de24d-6784-4e12-9454-4247affd59d8@1a0d.org
+UID:7b92fa25-603d-483b-8957-5e7985c71b00@7b92.org
 END:VEVENT
 END:VCALENDAR
