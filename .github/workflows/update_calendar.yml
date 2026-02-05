@@ -27,6 +27,9 @@ jobs:
           pip install requests pandas ics pytz
 
       - name: Run script
+        env:  # <--- 这里是新增的
+          USER_LAT: ${{ secrets.USER_LAT }}
+          USER_LON: ${{ secrets.USER_LON }}
         run: python main.py
 
       - name: Deploy to GitHub Pages
