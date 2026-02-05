@@ -4,7 +4,7 @@ from ics import Calendar, Event
 from datetime import datetime, timedelta
 import os
 import pytz
-import sys  # 引入系统模块，用于报错时强制停止
+import sys
 
 # --- 🌍 用户配置区域 ---
 LATITUDE = float(os.environ.get("USER_LAT", 31.23)) 
@@ -15,7 +15,7 @@ TIMEZONE = "Asia/Shanghai"
 BLOCK_START_HOUR = 0  
 BLOCK_END_HOUR = 5    
 MIN_DURATION_HOURS = 2 
-FORECAST_DAYS = 7 
+FORECAST_DAYS = 5  # ✅ 已回归规整：5天 (CAMS模型的物理极限)
 
 # --- 🌞 完美天气标准 ---
 PERFECT_CONDITION = {
@@ -40,7 +40,7 @@ LEVELS_WARNING = [
 
 def get_combined_data():
     """同时获取空气和天气数据并合并"""
-    print(f"📡 正在获取 7 天数据 (空气 + 天气)...")
+    print(f"📡 正在获取 {FORECAST_DAYS} 天数据 (CAMS模型 + 天气)...")
     
     # 1. 获取空气数据
     url_air = "https://air-quality-api.open-meteo.com/v1/air-quality"
@@ -70,7 +70,7 @@ def get_combined_data():
     
     df = pd.merge(df_air, df_weather, on='time')
     
-    # --- 🔧 修复点：这里修正了列名 pm25 -> pm2_5 ---
+    # 清洗数据
     cols = ['pm2_5', 'pm10', 'nitrogen_dioxide', 'ozone', 'temperature_2m', 'cloud_cover', 'visibility']
     for col in cols:
         df[col] = pd.to_numeric(df[col], errors='coerce')
@@ -189,6 +189,7 @@ def create_event_dict(time, level_info, vals):
     }
 
 if __name__ == "__main__":
+    import sys
     os.makedirs("public", exist_ok=True)
     try:
         df = get_combined_data()
@@ -205,5 +206,4 @@ if __name__ == "__main__":
     except Exception as e:
         import traceback
         traceback.print_exc()
-        # 🔥 关键修改：一旦报错，强制让 GitHub Action 失败，防止空文件发布
         sys.exit(1)
