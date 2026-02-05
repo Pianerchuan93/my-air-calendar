@@ -15,7 +15,7 @@ TIMEZONE = "Asia/Shanghai"
 BLOCK_START_HOUR = 0  
 BLOCK_END_HOUR = 5    
 MIN_DURATION_HOURS = 2 
-FORECAST_DAYS = 5  # ✅ 已回归规整：5天 (CAMS模型的物理极限)
+FORECAST_DAYS = 5  # 保持5天，规整
 
 # --- 🌞 完美天气标准 ---
 PERFECT_CONDITION = {
@@ -42,7 +42,6 @@ def get_combined_data():
     """同时获取空气和天气数据并合并"""
     print(f"📡 正在获取 {FORECAST_DAYS} 天数据 (CAMS模型 + 天气)...")
     
-    # 1. 获取空气数据
     url_air = "https://air-quality-api.open-meteo.com/v1/air-quality"
     params_air = {
         "latitude": LATITUDE, "longitude": LONGITUDE,
@@ -53,7 +52,6 @@ def get_combined_data():
     res_air.raise_for_status()
     df_air = pd.DataFrame(res_air.json()['hourly'])
     
-    # 2. 获取天气数据
     url_weather = "https://api.open-meteo.com/v1/forecast"
     params_weather = {
         "latitude": LATITUDE, "longitude": LONGITUDE,
@@ -64,13 +62,11 @@ def get_combined_data():
     res_weather.raise_for_status()
     df_weather = pd.DataFrame(res_weather.json()['hourly'])
     
-    # 3. 合并数据
     df_air['time'] = pd.to_datetime(df_air['time'])
     df_weather['time'] = pd.to_datetime(df_weather['time'])
     
     df = pd.merge(df_air, df_weather, on='time')
     
-    # 清洗数据
     cols = ['pm2_5', 'pm10', 'nitrogen_dioxide', 'ozone', 'temperature_2m', 'cloud_cover', 'visibility']
     for col in cols:
         df[col] = pd.to_numeric(df[col], errors='coerce')
@@ -88,11 +84,9 @@ def generate_calendars(df):
     for index, row in df.iterrows():
         current_time = row['time'].tz_localize(TIMEZONE)
         
-        # 提取指标
         vals_air = (row['pm2_5'], row['pm10'], row['nitrogen_dioxide'], row['ozone'])
         vals_weather = (row['temperature_2m'], row['cloud_cover'], row['visibility']) 
 
-        # 1. 过滤深夜
         if BLOCK_START_HOUR <= current_time.hour < BLOCK_END_HOUR:
             if curr_active: events_active.append(curr_active); curr_active = None
             if curr_warning: events_warning.append(curr_warning); curr_warning = None
@@ -100,7 +94,6 @@ def generate_calendars(df):
 
         # --- Active 判定 ---
         match_act = None
-        
         for idx, (lim_p25, lim_p10, lim_no2, lim_o3, title, desc) in enumerate(LEVELS_ACTIVE):
             if (vals_air[0] <= lim_p25 and vals_air[1] <= lim_p10 and 
                 vals_air[2] <= lim_no2 and vals_air[3] <= lim_o3):
@@ -123,7 +116,6 @@ def generate_calendars(df):
                 match_act = (final_title, final_desc)
                 break
         
-        # Active 合并
         if curr_active:
             if match_act and curr_active['title'] == match_act[0]:
                 curr_active['end'] = current_time + timedelta(hours=1)
@@ -145,7 +137,6 @@ def generate_calendars(df):
                     match_warn = (title, desc)
                     break
         
-        # Warning 合并
         if curr_warning:
             if match_warn and curr_warning['title'] == match_warn[0]:
                 curr_warning['end'] = current_time + timedelta(hours=1)
@@ -172,9 +163,10 @@ def process_events_to_calendar(cal, events):
         
         if duration >= MIN_DURATION_HOURS:
             e = Event()
-            t_start = start_dt.strftime('%H:%M')
-            t_end = end_dt.strftime('%H:%M')
-            e.name = f"[{t_start}-{t_end}] {e_data['title']}"
+            
+            # --- ⏪ 改回原样：只显示标题，去掉 [HH:MM] ---
+            e.name = e_data['title'] 
+            
             e.begin = start_dt
             e.end = end_dt
             e.description = e_data['desc']
@@ -189,7 +181,6 @@ def create_event_dict(time, level_info, vals):
     }
 
 if __name__ == "__main__":
-    import sys
     os.makedirs("public", exist_ok=True)
     try:
         df = get_combined_data()
