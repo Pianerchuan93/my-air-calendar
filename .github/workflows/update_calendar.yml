@@ -2,9 +2,9 @@ name: Update Air Quality Calendar
 
 on:
   schedule:
-    # 每天北京时间早上 6:00 (UTC 22:00) 和 下午 18:00 (UTC 10:00) 运行
-    - cron: '0 22 * * *'
-    - cron: '0 10 * * *'
+    # 国际标准时间(UTC) 0点, 6点, 12点, 18点 运行
+    # 对应北京时间 8点, 14点, 20点, 次日2点
+    - cron: '0 0,6,12,18 * * *'
   workflow_dispatch: # 允许手动点击按钮触发（方便测试）
 
 jobs:
