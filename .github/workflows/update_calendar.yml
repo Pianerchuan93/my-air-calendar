@@ -1,0 +1,39 @@
+name: Update Air Quality Calendar
+
+on:
+  schedule:
+    # 每天北京时间早上 6:00 (UTC 22:00) 和 下午 18:00 (UTC 10:00) 运行
+    - cron: '0 22 * * *'
+    - cron: '0 10 * * *'
+  workflow_dispatch: # 允许手动点击按钮触发（方便测试）
+
+jobs:
+  build_and_deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write # 赋予写权限以便发布 Pages
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+
+      - name: Install dependencies
+        run: |
+          pip install requests pandas ics pytz
+
+      - name: Run script
+        run: python main.py
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./public  # 把脚本生成的 public 文件夹发布出去
+          keep_files: false
+          user_name: 'GitHub Action'
+          user_email: 'action@github.com'
