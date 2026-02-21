@@ -6,20 +6,13 @@ DESCRIPTION:轻度污染，刚需出门建议防护。(75 < PM2.5 < 115)\n(PM2.5
 DTEND:20260224T040000Z
 DTSTART:20260224T010000Z
 SUMMARY:😷 刚需窗口
-UID:bc82ef21-8475-4933-99e4-8d1922088f02@bc82.org
-END:VEVENT
-BEGIN:VEVENT
-DESCRIPTION:轻度污染，刚需出门建议防护。(75 < PM2.5 < 115)\n(PM2.5:53 | PM10:55 | NO2:82 | O3:54)
-DTEND:20260221T140000Z
-DTSTART:20260221T080000Z
-SUMMARY:😷 刚需窗口
-UID:9fa88ea9-b2b9-4327-9db4-7ad599d2d483@9fa8.org
+UID:1df6cb93-e008-4c7d-9553-fc1b4fa6dbba@1df6.org
 END:VEVENT
 BEGIN:VEVENT
 DESCRIPTION:轻度污染，刚需出门建议防护。(75 < PM2.5 < 115)\n(PM2.5:75 | PM10:75 | NO2:96 | O3:0)
 DTEND:20260222T020000Z
 DTSTART:20260221T210000Z
 SUMMARY:😷 刚需窗口
-UID:dfada4ec-5f46-4b8d-a5f6-221ea51e05cf@dfad.org
+UID:52ab84ec-cb2c-4efc-b2e9-380d98dc6f99@52ab.org
 END:VEVENT
 END:VCALENDAR
