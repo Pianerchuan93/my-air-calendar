@@ -2,10 +2,10 @@ BEGIN:VCALENDAR
 VERSION:2.0
 PRODID:Air Warning
 BEGIN:VEVENT
-DESCRIPTION:轻度污染，刚需出门建议防护。(75 < PM2.5 < 115)\n(PM2.5:57 | PM10:65 | NO2:82 | O3:1)
+DESCRIPTION:轻度污染，刚需出门建议防护。(75 < PM2.5 < 115)\n(PM2.5:54 | PM10:61 | NO2:85 | O3:2)
 DTEND:20260225T160000Z
 DTSTART:20260225T120000Z
 SUMMARY:😷 刚需窗口
-UID:a2ae3c92-de9d-4d8f-8fb0-841dbb3c4836@a2ae.org
+UID:659b8d0c-5e4a-47d8-81d1-9196af99f397@659b.org
 END:VEVENT
 END:VCALENDAR
